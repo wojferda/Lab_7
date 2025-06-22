@@ -1,0 +1,68 @@
+name: lab_7_00000_test
+
+on:
+  push:
+    branches:
+      - roboczy
+
+jobs:
+  test_add:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pytest numpy pandas
+      - name: Run test_add
+        run: pytest test_add.py
+
+  test_subtract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pytest numpy pandas
+      - name: Run test_subtract
+        run: pytest test_subtract.py
+
+  test_multiply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pytest numpy pandas
+      - name: Run test_multiply
+        run: pytest test_multiply.py
+
+  test_divide:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pytest numpy pandas
+      - name: Run test_divide
+        run: pytest test_divide.py
+
+  new_test:
+    runs-on: ubuntu-latest
+    needs: [test_add, test_subtract, test_multiply, test_divide]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pytest numpy pandas
+      - name: Run new test
+        run: pytest test_avg.py

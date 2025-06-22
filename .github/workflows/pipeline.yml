@@ -4,29 +4,130 @@ on:
   push:
     branches:
       - roboczy
-    
+
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest
-    
+    outputs:
+      python-path: ${{ steps.setpath.outputs.path }}
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.11'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
 
-    - name: Install libs for testing
-      run: |
-        pip  install pytest 
-    
-    - name: prepare environemnt 
-      run: |
-         cd ./env_416796 && python -m pip install -r requirements.txt
-      
+      - name: Install dependencies
+        run: |
+          cd ./env_416796
+          pip install -r requirements.txt
 
-    - name: Run test
-      run: |
-        cd ./env_416796 && pytest calculator_test.py
+  test_dodawanie:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          cd ./env_416796
+          pip install -r requirements.txt
+      - name: Run dodawanie test
+        run: |
+          cd ./env_416796
+          pytest -k test_dodawanie calculator_test.py
+
+  test_odejmowanie:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          cd ./env_416796
+          pip install -r requirements.txt
+      - name: Run odejmowanie test
+        run: |
+          cd ./env_416796
+          pytest -k test_odejmowanie calculator_test.py
+
+  test_mnozenie:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          cd ./env_416796
+          pip install -r requirements.txt
+      - name: Run mnozenie test
+        run: |
+          cd ./env_416796
+          pytest -k test_mnozenie calculator_test.py
+
+  test_dzielenie:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          cd ./env_416796
+          pip install -r requirements.txt
+      - name: Run dzielenie test
+        run: |
+          cd ./env_416796
+          pytest -k test_dzielenie calculator_test.py
+
+  test_suma_kolumny:
+    needs: [prepare, test_dodawanie, test_odejmowanie, test_mnozenie, test_dzielenie]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          cd ./env_416796
+          pip install -r requirements.txt
+      - name: Run new calculator tests
+        run: |
+          cd ./env_416796
+          pytest -k test_suma_kolumny calculator_test.py
+
+  test_srednia_kolumny:
+    needs: [prepare, test_dodawanie, test_odejmowanie, test_mnozenie, test_dzielenie]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          cd ./env_416796
+          pip install -r requirements.txt
+      - name: Run new calculator tests
+        run: |
+          cd ./env_416796
+          pytest -k test_srednia_kolumny calculator_test.py

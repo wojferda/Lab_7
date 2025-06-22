@@ -14,3 +14,10 @@ def dzielenie(liczba1, liczba2):
         return np.divide(liczba1, liczba2)
     else:
         return "Błąd: dzielenie przez zero!"
+def suma_kolumny(lista_liczb):
+    df = pd.DataFrame({'kolumna': lista_liczb})
+    return df['kolumna'].sum()
+
+def srednia_kolumny(lista_liczb):
+    df = pd.DataFrame({'kolumna': lista_liczb})
+    return df['kolumna'].mean()

@@ -62,7 +62,7 @@ git push
 
 ## 6. Stworzenie i modyfikacja pliku `.gitlab-ci.yml`
 
-W celu automatyzacji procesu testowania utworzyłem plik `.gitlab-ci.yml`, który definiuje pipeline CI/CD. Pipeline zawiera jedną fazę `test`, która uruchamia testy za pomocą `pytest`.
+W celu automatyzacji procesu testowania utworzyłem plik `pipeline.yml` w .github/workflows, który definiuje pipeline CI/CD. Pipeline zawiera fazy `test` na działania matematyczne, która uruchamia testy za pomocą `pytest`.
 
 ```yaml
 stages:
@@ -82,10 +82,9 @@ test_job:
 Do skryptu `calculator.py` dodałem dodatkowe funkcje matematyczne oraz obsługę wyjątków. Przykład jednej z dodanych funkcji:
 
 ```python
-def divide(a, b):
-    if b == 0:
-        raise ValueError("Division by zero")
-    return a / b
+def suma_kolumny(lista_liczb):
+    df = pd.DataFrame({'kolumna': lista_liczb})
+    return df['kolumna'].sum()
 ```
 
 ---
@@ -95,12 +94,9 @@ def divide(a, b):
 Dla każdej funkcji zdefiniowałem odpowiadające testy jednostkowe z użyciem `pytest`. Testy sprawdzają poprawność wyników oraz odpowiednie zachowanie w sytuacjach wyjątkowych:
 
 ```python
-def test_divide():
-    assert divide(6, 2) == 3
-
-def test_divide_by_zero():
-    with pytest.raises(ValueError):
-        divide(5, 0)
+def test_suma_kolumny():
+    assert suma_kolumny([1, 2, 3, 4]) == 10
+    assert suma_kolumny([]) == 0
 ```
 
 ---
